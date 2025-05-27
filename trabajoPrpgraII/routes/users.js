@@ -9,4 +9,8 @@ router.get('/register', usersController.register);
 
 router.get('/profile', usersController.profile);
 
+router.post('/newuser', usersController.create);
+
+router.post('/processLogin', usersController.processLogin);
+
 module.exports = router;

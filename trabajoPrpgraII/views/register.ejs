@@ -34,7 +34,7 @@
 			Recuerden todo lo que necesita tanto la etiqueta form como los campos input para operar correctamtente</i> <br>
 			////////////////
 			</h2> -->
-			<form action="/users/profile" method="GET">
+			<form action="/users/newuser" method="POST">
 
 				<div>
 					<label for="email">Email:</label>
@@ -42,8 +42,8 @@
 	
 				</div>
 				<div>
-					<label for="usuario">Usuario</label>
-					<input id="usuario" type="text" name="usuario" value="">
+					<label for="username">Username</label>
+					<input id="username" type="text" name="username" value="">
 				</div>
 				
 
@@ -53,19 +53,11 @@
 				</div>
 
 				<div>
-					<label for="fecha">Fecha de Nacimiento</label>
-					<input id="fecha" type="date" name="fecha" value="">
+					<label for="birthdate">Fecha de Nacimiento</label>
+					<input id="birthdate" type="date" name="birthdate" value="">
 				</div>
 
-				<div>
-					<label for="documento">Documento</label>
-					<input id="documento" type="number" name="usuario" value="">
-				</div>
-
-				<div>
-					<label for="foto">Foto</label>
-					<input id="foto" type="text" name="foto" value="">
-				</div>
+				
 
 				<div>
 					<button type="submit">Enviar</button>
