@@ -3,16 +3,11 @@ const db = require("../database/models")
 const bcrypt = require('bcryptjs')
 
 const usersController = {
+
     register: function (req, res) {
         res.render('register');
     },
-    login: function (req, res) {
-        res.render('login')
-    },
-    profile: function (req, res) {
-        res.render('profile', { products: data.listaProducts })
-    },
-    create: function (req, res) {
+    processRegister: function (req, res) {
 
         let username = req.body.username;
         let email = req.body.email;
@@ -35,6 +30,9 @@ const usersController = {
             })
     },
 
+    login: function (req, res) {
+        res.render('login')
+    },
     processLogin: function (req, res) {
         let userInfo = {
             email: req.body.email,
@@ -52,7 +50,7 @@ const usersController = {
 
 
                     req.session.user = results;
-                    return res.send(results)
+            
 
 
                     return res.redirect("/")
@@ -74,6 +72,42 @@ const usersController = {
         //Si además el usuario tildó "recordame" entonces también creamos una cookie con los datos del usuario.
 
     },
+
+
+
+
+
+
+    profile: function (req, res) {
+        res.render('profile', { products: data.listaProducts })
+    },
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
 }
 
 module.exports = usersController;
