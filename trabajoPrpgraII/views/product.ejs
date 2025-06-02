@@ -16,14 +16,18 @@
 </head>
 <body>
 	<!-- Header -->
-	<%- include('partials/header') %>
+	<% if (locals.user != undefined) { %>
+		<%- include('partials/headerLogueado') %>
+	   <% } else { %>
+	   <%- include('partials/header') %>
+	   <% } %>
 	<!-- /Header -->
 	
 	<!-- product detail -->
 
 	<div class="container products-wrapper">
 		<div class="d-flex align-items-center">
-			<h2 class="products-title"><%= producto.nombre %></h2> 
+			<h2 class="products-title"><%= results.prooductName %></h2> 
 			<p class="product-detail-description">
 				<a href="/product/productAdd">Editar</a>
 			</p>
@@ -31,20 +35,20 @@
 		<div class="product-detail">
 			<div class="row">
 				<article class="col-12 col-lg-8 product-detail-info">
-					<img src="/images/products/<%= producto.foto %>" alt="" class="product-detail-img">
+					<img src="/images/products/<%= results.image %>" alt="" class="product-detail-img">
 					<p class="product-detail-description">
-					<%= producto.descripcion %>
+					<%= results.descripcion %>
 					</p>
 				</article>
 				<div class="col-12 col-lg-4">
 					<section class="comments">
-						<% for( let i = 0; i < producto.comentario.length; i++ ) { %>
+						<% for( let i = 0; i < results.coments.length; i++ ) { %>
 							<article>
-								<img src="<%= producto.comentario[i].foto %>" alt="">
+								<img src="" alt="">
 								<div class="data">
 									<p class="user">
-									<strong> <a href="/users/profile"><%= producto.comentario[i].nombre %> </a>: </strong>
-									<%= producto.comentario[i].comentario %></p>
+									<strong> <a href="/users/profile"><%= results.coments[i].user.username %> </a>: </strong>
+									<%= results.coments[i].coment %></p>
 								</div>
 							</article>
 						<% } %>

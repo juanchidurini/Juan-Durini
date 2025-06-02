@@ -16,7 +16,11 @@
 </head>
 <body>
 	<!-- Header -->
-	<%- include('partials/headerLogueado') %>
+	<% if (locals.user != undefined) { %>
+		<%- include('partials/headerLogueado') %>
+	   <% } else { %>
+	   <%- include('partials/header') %>
+	   <% } %>
 	<!-- /Header -->
 
 	<!-- Datos del usuario -->
@@ -36,7 +40,7 @@
 				</div>
 				<div>
 					<ul class="">
-						<li><%= products.length %> productos</li>
+					<li><%= products.length %> productos</li>
 						<li>200 seguidores</li>
 						<li>300 comentarios</li>
 					</ul>

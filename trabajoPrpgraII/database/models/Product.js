@@ -1,6 +1,6 @@
 module.exports = function (sequelize, dataTypes){
 
-    let alias = 'User';
+    let alias = 'Product';
 
     let cols = {
         id: {
@@ -8,16 +8,16 @@ module.exports = function (sequelize, dataTypes){
             primaryKey: true,
             type: dataTypes.INTEGER
         },
-        username: {
+        image: {
             type: dataTypes.STRING
         },
-        email: {
+        productName: {
             type: dataTypes.STRING
         },
-        contrasennia: {
+        usersId: {
             type: dataTypes.STRING
         },
-        birthdate: {
+        descripcion: {
             type: dataTypes.DATE
         },
         createdAt: {
@@ -33,26 +33,26 @@ module.exports = function (sequelize, dataTypes){
     }
 
     let config = {
-        tableName : "users",
+        tableName : "products",
         timestamps:true,
         underscored: false,
     };
 
-    const User = sequelize.define(alias, cols, config);
+    const Product = sequelize.define(alias, cols, config);
 
-    User.associate = function(models){
-        User.hasMany(models.Product, {
-            as: "products",
+    Product.associate = function(models){
+        Product.belongsTo(models.User, {
+            as: "user",
             foreignKey: "usersId"
         })
     }
-    User.associate = function(models){
-        User.hasMany(models.Coment, {
+    Product.associate = function(models){
+        Product.hasMany(models.Coment, {
             as: "coments",
-            foreignKey: "usersId"
+            foreignKey: "productsId"
         })
     }
 
-    return User;
+    return Product;
 
 }

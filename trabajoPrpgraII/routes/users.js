@@ -13,4 +13,6 @@ router.post('/newuser', usersController.processRegister);
 
 router.post('/processLogin', usersController.processLogin);
 
+router.get("/logout",usersController.logout);
+
 module.exports = router;

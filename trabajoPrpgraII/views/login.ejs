@@ -18,7 +18,11 @@
 
 <body>
 	<!-- Header -->
-	<%- include('partials/header') %>
+	<% if (locals.user != undefined) { %>
+		<%- include('partials/headerLogueado') %>
+	   <% } else { %>
+	   <%- include('partials/header') %>
+	   <% } %>
 		<!-- /Header -->
 
 		<!-- Novedades -->
@@ -41,7 +45,7 @@
 				<form action="/users/processLogin" method="POST">
 
 					<div>
-						<label for="email">Email:</label>
+						<label for="email">Email</label>
 						<input id="email" type="email" name="email" value="">
 		
 					</div>
@@ -49,6 +53,11 @@
 					<div>
 						<label for="password">Contraseña</label>
 						<input id="password" type="password" name="password" value="">
+					</div>
+
+					<div>
+						<label for="recordarme">Recordarme</label>
+						<input id="recordarme" type="checkbox" name="recordarme" value="on">
 					</div>
 
 					<div>

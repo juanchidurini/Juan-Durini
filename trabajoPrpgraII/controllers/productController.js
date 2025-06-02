@@ -1,25 +1,41 @@
-const data = require("../db/index")
+const db = require("../database/models")
 
 const productController = {
-    index: function(req, res) {
-        let id = req.params.id;
-        let producto = {};
-        for (let i = 0; i < data.listaProducts.length; i++) {
-            const element = data.listaProducts[i];
-            if (id == element.id) {
-                producto = element
+    index: function (req, res) {
+
+        db.Product.findAll({
+            include: [
+                {association: "coments", 
+                include:[{association: "user"}]}
+            ]
+        })
+            .then(function (resultados) {
                 
-            }
-            
-        }
-        return res.render('product', {producto : producto})
-        
+                return res.render("index", { results: resultados, usuario: req.session.user});
+            })
+            .catch(function (error) {
+                return res.send(error)
+            })
+
+    },
+    detail:function (req,res) {
+        db.Product.findByPk(req.params.id, {
+            include: [
+                {association: "coments", 
+                include:[{association: "user"}]}
+            ]
+        })
+            .then(function (resultados) {
+                
+                return res.render("product", { results: resultados, usuario: req.session.user });
+            });
+
     },
     productAdd: function(req, res) {
-        res.render('productAdd');
+        res.render('productAdd', {usuario: req.session.user });
     },
     searchResults: function(req, res) {
-        res.render('searchResults');
+        res.render('searchResults', {usuario: req.session.user });
     }
 }
 

@@ -1,11 +1,15 @@
 const { where } = require("sequelize");
 const db = require("../database/models")
 const bcrypt = require('bcryptjs')
-
+const op = db.Sequelize.Op
 const usersController = {
 
     register: function (req, res) {
-        res.render('register');
+        if (req.session.user != undefined) {
+            return res.redirect('/')
+        } else {
+            return res.render('register')
+        }
     },
     processRegister: function (req, res) {
 
@@ -21,17 +25,42 @@ const usersController = {
             birthdate: birthdate,
         }
 
-        db.User.create(usuario)
+
+
+        db.User.findOne({
+            where: [{ email: usuario.email }]
+        })
             .then(function (results) {
-                return res.redirect("/")
+
+                if (results != undefined) {
+                    return res.send("el mail ya esta resgitrado")
+                }
+                db.User.create(usuario)
+                    .then(function (results) {
+                        return res.redirect("/")
+                    })
+                    .catch(function (err) {
+                        return res.send(err)
+                    })
             })
             .catch(function (err) {
                 return res.send(err)
             })
+
+
+
+
+
+
     },
 
     login: function (req, res) {
-        res.render('login')
+        if (req.session.user != undefined) {
+            return res.redirect('/')
+        } else {
+            return res.render('login')
+        }
+
     },
     processLogin: function (req, res) {
         let userInfo = {
@@ -40,11 +69,9 @@ const usersController = {
             recordarme: req.body.recordarme
         }
 
-        
 
-        db.User.findOne({
-            where: [{ email: userInfo.email }]
-        })
+//return res.send(userInfo)
+        db.User.findOne({ where: [{ email: userInfo.email }]})
             .then(function (results) {
 
                 if (results == undefined) {
@@ -55,7 +82,10 @@ const usersController = {
 
 
                     req.session.user = results;
-            
+
+                    if (userInfo.recordarme != undefined) {
+                        res.cookie('usuario', userInfo.contrasennia,{maxAge: 1000 * 60 * 5} )
+                    }
 
 
                     return res.redirect("/")
@@ -64,7 +94,8 @@ const usersController = {
                     return res.send("no, las contraseñas son distinas")
 
                 }
-               
+                
+
 
             })
             .catch(function (err) {
@@ -78,40 +109,15 @@ const usersController = {
 
     },
 
-
-
-
-
-
     profile: function (req, res) {
-        res.render('profile', { products: data.listaProducts })
+        return res.send('profile')
+
     },
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
+    logout:function (req,res) {
+        req.session.destroy()
+        res.clearCookie('usuario')
+        return res.redirect("/")
+    }
 
 }
 
