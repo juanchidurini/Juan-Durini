@@ -46,6 +46,11 @@ const usersController = {
             where: [{ email: userInfo.email }]
         })
             .then(function (results) {
+
+                if (results == undefined) {
+                    return res.send("el mail no esta resgitrado")
+                }
+
                 if (bcrypt.compareSync(userInfo.contrasennia, results.contrasennia)) {
 
 
